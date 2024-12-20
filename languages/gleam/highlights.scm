@@ -23,6 +23,14 @@
   field: (label) @function)
  (#is-not? local))
 
+; "Properties"
+; Assumed to be intended to refer to a name for a field; something that comes
+; before ":" or after "."
+; e.g. record field names, tuple indices, names for named arguments, etc
+(label) @property
+(tuple_access
+  index: (integer) @property)
+
 ; Functions
 (unqualified_import (identifier) @function)
 (unqualified_import "type" (type_identifier) @type)
@@ -36,18 +44,22 @@
 ((function_call
    function: (identifier) @function)
  (#is-not? local))
+(function_call
+  function:
+    (field_access
+      record: (identifier) @module
+      field: (label) @function))
 ((binary_expression
    operator: "|>"
    right: (identifier) @function)
  (#is-not? local))
-
-; "Properties"
-; Assumed to be intended to refer to a name for a field; something that comes
-; before ":" or after "."
-; e.g. record field names, tuple indices, names for named arguments, etc
-(label) @property
-(tuple_access
-  index: (integer) @property)
+((binary_expression
+   operator: "|>"
+   right:
+    (field_access
+      record: (identifier) @module
+      field: (label) @function))
+ (#is-not? local))
 
 ; Attributes
 (attribute
