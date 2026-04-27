@@ -36,29 +36,29 @@
 (unqualified_import "type" (type_identifier) @type)
 (unqualified_import (type_identifier) @constructor)
 (function
-  name: (identifier) @function)
+  name: (identifier) @function.definition)
 (external_function
-  name: (identifier) @function)
+  name: (identifier) @function.definition)
 (function_parameter
   name: (identifier) @variable.parameter)
 ((function_call
-   function: (identifier) @function)
+   function: (identifier) @function.call)
  (#is-not? local))
 (function_call
   function:
     (field_access
       record: (identifier) @module
-      field: (label) @function))
+      field: (label) @function.call))
 ((binary_expression
    operator: "|>"
-   right: (identifier) @function)
+   right: (identifier) @function.call)
  (#is-not? local))
 ((binary_expression
    operator: "|>"
    right:
     (field_access
       record: (identifier) @module
-      field: (label) @function))
+      field: (label) @function.call))
  (#is-not? local))
 
 ; Attributes
@@ -81,7 +81,7 @@
  ; Deprecated in v0.33.0-rc2:
  (#eq? @warning "\\e"))
 (escape_sequence) @string.escape
-(bit_string_segment_option) @function.builtin
+(bit_array_segment_option) @function.builtin
 (integer) @number
 (float) @number
 
